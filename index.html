@@ -105,11 +105,11 @@
         #falling.deep {
             opacity: 1;
             transition: 0.5s ease-in;
+            z-index: 1;
         }
         #falling img {
             display: block;
-            max-width: 70%;
-            width: 500px;
+            width: 250px;
             margin-inline: auto;
             position: relative;
             z-index: 1;
@@ -137,6 +137,8 @@
             width: 80%;
             font-family: "Montserrat", sans serif;
             text-decoration: none;
+            position: relative;
+            z-index: 1;
         }
         p {
             font-family: "Tangerine", serif;
@@ -262,7 +264,7 @@
         const x = (Math.random() - 0.5) * width * 2 + "px";
         const y = (Math.random() - 0.5) * height * 2 + "px";
         const r = (Math.random() * 30 - randomBetween(-10, 20)) + "deg";
-        const scale = randomBetween(minScale, Math.min(centerX / 2 / 5, maxScale));
+        const scale = randomBetween(minScale, Math.min(centerX / 2 / 6, maxScale));
         const colors = ['#FF0000', '#FF69B4', '#FF4500', '#DC143C', '#FF1493'];
         const randomColor = colors[Math.floor(Math.random() * colors.length)];
         
