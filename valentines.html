@@ -1,0 +1,279 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Valentine's Proposal</title>
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <style>
+        @import url(https://fonts.googleapis.com/css?family=Montserrat);
+        @import url(https://fonts.googleapis.com/css2?family=Tangerine:wght@400;700&display=swap);
+        /* @import url(https://fonts.googleapis.com/css2?family=MonteCarlo&display=swap); */
+
+        body {
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            height: 100vh;
+            background-color: rgb(255, 183, 197);
+            overflow: hidden;
+            margin: 0;
+            position: relative;
+            /* font-family: "Tangerine", serif; */
+            /* font-family: "Montserrat", sans serif; */
+            /* font-family: "MonteCarlo", serif; */
+            color: rgb(255, 183, 197);
+        }
+        .heart-start {
+            position: absolute;
+            width: 100px;
+            height: 100px;
+            cursor: pointer;
+        }
+
+        .heart-start.pulse {
+            animation: pulse 1s infinite;
+        }
+
+        .heart-start.animate {
+            animation: scaleShake 1.5s ease-in-out;
+        }
+
+        .heart-start svg {
+            width: 100%;
+            height: 100%;
+        }
+        
+        .particle {
+            position: absolute;
+            width: 5px;
+            height: 5px;
+            opacity: 0.4;
+        }
+        #explotion {
+            position: absolute;
+            width: 100%;
+            height: 100%;
+            display: none;
+        }
+        #explotion.animate .particle {
+            animation: explode 1.5s ease-out forwards;
+        }
+
+
+        @keyframes pulse {
+            10% {transform: scale(1.1)}
+        }
+
+        @keyframes explode {
+            0% { transform: translate(0, 0) scale(1) rotate(0deg); opacity: 1; }
+            100% { transform: translate(var(--x), var(--y)) scale(var(--scale)) rotate(var(--r)); opacity: 0; }
+        }
+
+        @keyframes scaleShake {
+            0% { transform: scale(1); }
+            20% { transform: scale(1.5); }
+            30% { transform: scale(1.3); }
+            45% { transform: scale(1.5); }
+            55% { transform: scale(1.3); }
+            70% { transform: scale(1.60) rotate(-3deg); }
+            80% { transform: scale(1.4) rotate(3deg); }
+            85% { transform: scale(1.63) rotate(-2deg); }
+            90% { transform: scale(1.65) rotate(2deg); }
+            95% { transform: scale(1.7) rotate(-2deg); }
+            96% { transform: scale(1.7) rotate(2deg); }
+            97% { transform: scale(1.7) rotate(-2deg); }
+            98% { transform: scale(1.7) rotate(2deg); }
+            100% { transform: scale(1.5) rotate(0); }
+        }
+    </style>
+    <style>
+        #falling {
+            position: absolute;
+            width: 100%;
+            height: 100%;
+            /* background-image: linear-gradient(90deg, #FF047B 30%, #d00 100%); */
+            opacity: 0;
+            z-index: -1;
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            justify-content: space-evenly;
+            gap: 2.5rem;
+        }
+        #falling.deep {
+            opacity: 1;
+            transition: 0.5s ease-in;
+        }
+        #falling img {
+            display: block;
+            max-width: 70%;
+            width: 500px;
+            margin-inline: auto;
+            position: relative;
+            z-index: 1;
+            border-radius: 8px;
+        }
+        #falling .board {
+            background-color: #377780;
+            width: 80%;
+            border-radius: 8px;
+            padding: 16px;
+            display: flex;
+            flex-direction: column;
+            gap: 16px;
+        }
+        #falling a {
+            padding: 12px 16px;
+            background-color: #FF047B;
+            color: white;
+            border: none;
+            border-radius: 8px;
+            font-size: 1.5em;
+            cursor: pointer;
+            transition: 0.3s ease-in;
+            text-align: center;
+            width: 80%;
+            font-family: "Montserrat", sans serif;
+            text-decoration: none;
+        }
+        p {
+            font-family: "Tangerine", serif;
+            text-align: center;
+            font-size: 3em;
+            margin-block: 0;
+            color: #df55ef;
+            width: 19rem;
+            margin-inline: auto;
+            font-weight: bold;
+            /* text-shadow: 4px 4px 10px rgba(0, 0, 0, 0.55); */
+        }
+        span {
+            white-space: pre;
+            display: inline-block;
+            margin: 0;
+            padding: 0;
+        }
+        .falling {
+            white-space: pre;
+            transform: translate(0px, 0px);
+            animation: 3s ease-in 1s fall-and-rotate;
+        }
+
+        @keyframes fall-and-rotate {
+            0% {
+                color: #df55ef;
+                transform: translate(0px, 0px) rotate(0deg);
+            }
+            50% {
+                color: red;
+                transform: translate(0px, 250px) rotate(360deg);
+            }
+            50.1% {
+                transform: translate(0px, -500px) rotate(360deg);
+            }
+            100% {
+                color: #df55ef;
+                transform: translate(0px, 0px) rotate(720deg);
+            }
+        }
+    </style>
+</head>
+<body>
+    <div class="heart-start pulse" id="heart-start">
+        <svg viewBox="0 0 512 512" fill="#FF0000" xmlns="http://www.w3.org/2000/svg">
+            <path d="M474.655,74.503C449.169,45.72,413.943,29.87,375.467,29.87c-30.225,0-58.5,12.299-81.767,35.566 c-15.522,15.523-28.33,35.26-37.699,57.931c-9.371-22.671-22.177-42.407-37.699-57.931c-23.267-23.267-51.542-35.566-81.767-35.566 c-38.477,0-73.702,15.851-99.188,44.634C13.612,101.305,0,137.911,0,174.936c0,44.458,13.452,88.335,39.981,130.418 c21.009,33.324,50.227,65.585,86.845,95.889c62.046,51.348,123.114,78.995,125.683,80.146c2.203,0.988,4.779,0.988,6.981,0 c2.57-1.151,63.637-28.798,125.683-80.146c36.618-30.304,65.836-62.565,86.845-95.889C498.548,263.271,512,219.394,512,174.936 C512,137.911,498.388,101.305,474.655,74.503z"/>
+        </svg>
+    </div>
+    <div id="explotion"></div>
+    <div id="falling">
+        <p>Falling for you, over and over again.</p>
+        <img src="https://media.tenor.com/f7uPlN-usx4AAAAi/kawai-budding-pop.gif" alt="">
+        <a href="tel://88730215">Let's Go on a Date! ❤️</a>
+    </div>
+    <script>
+        var p = document.querySelector("#falling p");
+        var text = p.textContent;
+        var numberFalling = 5;
+
+        p.innerHTML = "";
+
+        for (var i = 0; i < text.length; i++) {
+            var span = document.createElement("span");
+            span.textContent = text[i];
+            p.appendChild(span);
+        }
+
+        for (var i = 0; i < numberFalling; i++) {
+            (() => {
+                return (
+                    setTimeout(() => {
+                        var el = p.children[Math.floor(Math.random() * p.children.length)];
+                        el.className = "falling";
+                        el.addEventListener("animationend", animateNext);
+                    },  i * (6500 / numberFalling))
+                )
+            })();
+        }
+
+        function animateNext() {
+            var notFalling = p.querySelectorAll(":not(.falling)");
+            this.className = "";
+            
+            var newEl = notFalling[Math.floor(Math.random() * notFalling.length)];
+            newEl.className = "falling";
+            newEl.addEventListener("animationend", animateNext);
+        }
+    </script>
+    <script>
+      const minScale = 5;
+      const maxScale = 30;
+      const particlesCount = 400;
+      const heart = document.getElementById("heart-start");
+      const explotion = document.getElementById("explotion");
+      const fallingContainer = document.getElementById('falling');
+
+      heart.onclick = () => {
+        heart.classList.add("animate");
+        heart.classList.remove("pulse");
+
+        setTimeout(() => {
+            heart.style.display = "none";
+            explotion.style.display = "block";
+            explotion.classList.add("animate");
+            setTimeout(() => fallingContainer.classList.add("deep"), 1300);
+            setTimeout(() => explotion.remove(), 1500);
+        }, 1500);
+      };
+
+    const randomBetween = (min, max) => Math.floor(Math.random() * (max - min + 1) + min);
+        
+    const { innerWidth: width, innerHeight: height } = window;
+    const centerX = width / 2;
+    const centerY = height / 2;
+
+    for (let i = 0; i < particlesCount; i++) {
+        const particle = document.createElement("div");
+        particle.classList.add("particle");
+        particle.innerHTML = heart.innerHTML;
+        explotion.appendChild(particle);
+        
+        const x = (Math.random() - 0.5) * width * 2 + "px";
+        const y = (Math.random() - 0.5) * height * 2 + "px";
+        const r = (Math.random() * 30 - randomBetween(-10, 20)) + "deg";
+        const scale = randomBetween(minScale, Math.min(centerX / 2 / 5, maxScale));
+        const colors = ['#FF0000', '#FF69B4', '#FF4500', '#DC143C', '#FF1493'];
+        const randomColor = colors[Math.floor(Math.random() * colors.length)];
+        
+        particle.style.setProperty('--x', x);
+        particle.style.setProperty('--y', y);
+        particle.style.setProperty('--r', r);
+        particle.style.setProperty('--scale', scale);
+        particle.style.left = `${centerX}px`;
+        particle.style.top = `${centerY}px`;
+        particle.querySelector('svg').setAttribute('fill', randomColor);
+    }
+    </script>
+</body>
+</html>
