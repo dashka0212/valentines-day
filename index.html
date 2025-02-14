@@ -272,6 +272,7 @@
       const explotion = document.getElementById("explotion");
       const fallingContainer = document.getElementById('falling');
       const clickText = document.getElementsByClassName('click-me')[0];
+      const img = document.getElementsByTagName('img')[0];
       const linkContent = {
         0: {
             label: 'Let\'s Go on a Date! ❤️',
@@ -291,6 +292,11 @@
         }
       }[crushIndex];
 
+      if(crushIndex === 2) {
+        img.src = "./2.webp";
+        img.style = "transform: rotate(-90deg); width: 300px;"
+      }
+
       heart.onclick = () => {
         heart.classList.add("animate");
         heart.classList.remove("pulse");
@@ -300,6 +306,7 @@
             clickText.style.display = "none";
             explotion.style.display = "block";
             explotion.classList.add("animate");
+
             setTimeout(() => {
                 const aTag = fallingContainer.querySelector('a');
                 aTag.href = linkContent.link;
