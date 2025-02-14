@@ -9,7 +9,7 @@
     <style>
         @import url(https://fonts.googleapis.com/css?family=Montserrat);
         @import url(https://fonts.googleapis.com/css2?family=Tangerine:wght@400;700&display=swap);
-        /* @import url(https://fonts.googleapis.com/css2?family=MonteCarlo&display=swap); */
+        @import url(https://fonts.googleapis.com/css2?family=MonteCarlo&display=swap);
 
         body {
             display: flex;
@@ -48,6 +48,20 @@
 
         .heart-start svg  path {
             shape-rendering: crispEdges;
+        }
+
+        .click-me {
+            /* position: absolute; */
+            display: block;
+            position: relative;
+            font-family: "Tangerine", serif;
+            font-size: 52px;
+            color: #151515;
+            margin-top: 210px;
+            /* left: 50%;
+            top: 50%;
+            transform: translate(-50%, -50%); */
+            /* font-family: "Montserrat", sans serif; */
         }
         
         .particle {
@@ -144,13 +158,21 @@
             text-decoration: none;
             position: relative;
             z-index: 1;
+            max-width: 300px;
+            box-shadow: 0 0 0 5px rgba(255, 255, 255, 0.2);
+            animation: glow 2s infinite;
         }
+
+        @keyframes glow {
+            30% {box-shadow: 0 0 0 5px rgba(255, 255, 255, 0.6)}
+        }
+
         p {
             font-family: "Tangerine", serif;
             text-align: center;
             font-size: 3em;
             margin-block: 0;
-            color: #df55ef;
+            color: #4a030a;
             width: 19rem;
             margin-inline: auto;
             font-weight: bold;
@@ -193,16 +215,25 @@
             <path shape-rendering="crispEdges" d="M474.655,74.503C449.169,45.72,413.943,29.87,375.467,29.87c-30.225,0-58.5,12.299-81.767,35.566 c-15.522,15.523-28.33,35.26-37.699,57.931c-9.371-22.671-22.177-42.407-37.699-57.931c-23.267-23.267-51.542-35.566-81.767-35.566 c-38.477,0-73.702,15.851-99.188,44.634C13.612,101.305,0,137.911,0,174.936c0,44.458,13.452,88.335,39.981,130.418 c21.009,33.324,50.227,65.585,86.845,95.889c62.046,51.348,123.114,78.995,125.683,80.146c2.203,0.988,4.779,0.988,6.981,0 c2.57-1.151,63.637-28.798,125.683-80.146c36.618-30.304,65.836-62.565,86.845-95.889C498.548,263.271,512,219.394,512,174.936 C512,137.911,498.388,101.305,474.655,74.503z"/>
         </svg>
     </div>
+    <span class="click-me">Touch my heart</span>
     <div id="explotion"></div>
     <div id="falling">
-        <p>Falling for you, over and over again.</p>
+        <p></p>
         <img src="https://media.tenor.com/f7uPlN-usx4AAAAi/kawai-budding-pop.gif" alt="">
         <a href="tel://88730215">Let's Go on a Date! ❤️</a>
     </div>
     <script>
-        var p = document.querySelector("#falling p");
-        var text = p.textContent;
-        var numberFalling = 5;
+
+        function getQueryParam(param) {
+            const urlParams = new URLSearchParams(window.location.search);
+            return urlParams.get(param);
+        }
+        const crush = Number(getQueryParam("c"));
+        const crushIndex = isNaN(crush) ? 0 : crush;
+
+        let p = document.querySelector("#falling p");
+        let text = ['Falling for you, over and over again.', 'Happy valentine\'s day Love you mini Nandin', 'Happy valentine\'s day, Love you Baabii'][crushIndex];
+        let numberFalling = 5;
 
         p.innerHTML = "";
 
@@ -240,6 +271,21 @@
       const heart = document.getElementById("heart-start");
       const explotion = document.getElementById("explotion");
       const fallingContainer = document.getElementById('falling');
+      const clickText = document.getElementsByClassName('click-me')[0];
+      const linkContent = {
+        0: {
+            label: 'Let\'s Go on a Date! ❤️',
+            link: ''
+        },
+        1: {
+            label: 'Let\'s Go on a Date! ❤️',
+            link: 'tel://88730215'
+        },
+        2: {
+            label: 'Date on 6PM ❤️',
+            link: 'https://www.facebook.com/ZTerraUB/videos/1315691609999072'
+        }
+      }[crushIndex];
 
       heart.onclick = () => {
         heart.classList.add("animate");
@@ -247,9 +293,15 @@
 
         setTimeout(() => {
             heart.style.display = "none";
+            clickText.style.display = "none";
             explotion.style.display = "block";
             explotion.classList.add("animate");
-            setTimeout(() => fallingContainer.classList.add("deep"), 1300);
+            setTimeout(() => {
+                const aTag = fallingContainer.querySelector('a');
+                aTag.href = linkContent.link;
+                aTag.innerText = linkContent.label;
+                fallingContainer.classList.add("deep");
+            }, 1300);
             setTimeout(() => explotion.remove(), 1500);
         }, 1500);
       };
